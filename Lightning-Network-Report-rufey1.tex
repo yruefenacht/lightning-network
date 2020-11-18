@@ -20,13 +20,19 @@
 % Indexing
 \usepackage{index}
 \makeindex
-
-\usepackage{blindtext}
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+ 	colorlinks=true, 
+	linkcolor=black,
+	urlcolor=blue,
+}
 
 \begin{document}
+
 % Title page
 \title{\Large{\textbf{The Bitcoin Lightning Network}}}
-\author{Yannick Mawuena Rüfenacht}
+\author{Yannick Mawuena Rüfenacht \\ \href{mailto:yannick.ruefenacht@hotmail.com}{yannick.ruefenacht@hotmail.com}}
 \date{October 21, 2020\\Version 1.0.0}
 \maketitle
 
@@ -37,6 +43,11 @@
 \par\raggedleft--- \textup{Joseph Poon}
 \vspace*{\fill}
 \end{quote}
+
+% Abstract
+\begin{abstract}
+Today’s Bitcoin protocol provides the possibility to participate in a secure decentralized payment system without a single custodial third-party holding funds. This system uses the blockchain technology to distribute all performed transactions across the network of participants for them to reach general consensus. The process of securing and distributing transactions takes up a substantial amount of time, which creates a significant drag on the ability to encompass all global financial transactions. The idea of the lightning network is to create micropayment channels between participants that operate off-blockchain. These channels can be used to instantly exchange Bitcoins without distributing them to the blockchain. Upon closing a micropayment channel, the history of transactions of that channel are being broadcasted to the main blockchain. This concept could prove to be useful especially in situations where two participants frequently exchange money.
+\end{abstract}
 
 % Table of Contents
 \tableofcontents
