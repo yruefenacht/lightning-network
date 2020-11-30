@@ -46,7 +46,7 @@
 
 % Abstract
 \begin{abstract}
-Today’s Bitcoin protocol provides the possibility to participate in a secure decentralized payment system without a single custodial third-party holding funds. This system uses the blockchain technology to distribute all performed transactions across the network of participants for them to reach general consensus. The process of securing and distributing transactions takes up a substantial amount of time, which creates a significant drag on the ability to encompass all global financial transactions. The idea of the lightning network is to create micropayment channels between participants that operate off-blockchain. These channels can be used to instantly exchange Bitcoins without distributing them to the blockchain. Upon closing a micropayment channel, the history of transactions of that channel are being broadcasted to the main blockchain. This concept could prove to be useful especially in situations where two participants frequently exchange money.
+Today’s Bitcoin protocol provides the possibility to participate in a secure decentralized payment system without a single custodial third-party holding funds. This system uses the blockchain technology to distribute all performed transactions across the network of participants for them to reach general consensus. The process of securing and distributing transactions takes up a substantial amount of time, which creates a significant drag on the ability to encompass all global financial transactions. The idea of the lightning network is to create micropayment channels between participants that operate off-blockchain. These channels can be used to instantly exchange Bitcoins without distributing them to the blockchain. Upon closing a micropayment channel, the final balance of that channel is broadcasted to the main blockchain. This concept could prove to be useful especially in situations where two participants frequently exchange money.
 \end{abstract}
 
 % Table of Contents
@@ -63,7 +63,7 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 \raggedbottom
 
 \chapter{Introduction}
-\par The aim of this paper is to shed light onto the mysterious inner workings of the Lightning Network. The Lightning Network builds upon the underlying technology of the blockchain. It uses the blockchain and Bitcoin smart contracts to create a secure network of participants which are able to perform transactions at high volume and speed. To be able to understand how the lightning network works or why it is even necessary, requires a basic understanding of the blockchain and Bitcoin.
+\par The primary aim of this paper is to provide a simple to understand explanation of the Lightning Network and why it is necessary. Furthermore, this paper also dives into the underlying system upon which the Lightning Network operates, namely the Bitcoin blockchain system. The Lightning Network uses the blockchain and Bitcoin smart contracts to create a secure network of participants which are able to perform transactions at high volume and speed. To be able to understand how the lightning network works or why it is even necessary, requires a basic understanding of the blockchain and Bitcoin.
 \par This paper guides the reader through a list of steps that show how the lightning network is built, starting from the basics of a blockchain. Each step builds on top of the previous one. It is therefore recommended to read this paper in the right order.
 
 \chapter{A Brief Overview of the Bitcoin Blockchain}
@@ -117,13 +117,46 @@ The proof of work, or hash, is unique for each block as aforementioned. It is ca
 \par That being said, it is theoretically possible to remove the need for cash. Hypothetically, if everyone in the world used this ledger, it would be possible to send and receive money on this ledger for all eternity without ever converting it to cash.
 
 \chapter{The Scalability Problem with Bitcoin}
-\par As far as safety is concerned, Bitcoin does an excellent job with its use of distributed ledgers. However, as a payment platform, Bitcoin by itself cannot handle the whole transactions of the world anytime in the near future.
+\par As far as safety is concerned, Bitcoin provides an excellent solution with its use of a distributed ledger. The Bitcoin blockchain requires, that all state modifications of the ledger must be broadcasted to each node of the Bitcoin network. It is through this mechanism that a general consensus of everyone’s balances can be achieved. However, as a payment platform, Bitcoin by itself cannot handle the whole transactions of the world anytime in the near future. The fact that all transactions must be broadcasted throughout the entire world, creates significant time delays which result in Bitcoin being only able to handle a few transactions per second.
 
 \chapter{Introducing the Lightning Network}
+\par The Lightning network presents an additional layer that operates on top of the Bitcoin blockchain with the aim to enable instant and feeless micropayments. It has been introduced in 2015 and has been in development ever since. The main idea of the Lightning Network is to establish separate end-to-end connections between participants in order to not store every small transaction on the main blockchain, but rather off-blockchain. These connections are named micropayment channels or simply payment channels.
+
+\section{Payment channels}
+\par If two participants regularly exchange amounts, they would open a new payment channel between them, that is off-blockchain. This allows them to perform quick payments between each other. Once they conclude their business, they conduct a closing transaction on the main blockchain which contains the final balances of their wallets on the payment channel. That way, even if thousands of transactions are performed on the payment channel, only two transactions will be stored on the blockchain eventually. One for opening and one for closing the payment channel.
+
+\paragraph{Creating a new payment channel} \hspace{0pt} \\
+During the initiation of the payment channel, both parties provide a certain balance of Bitcoin onto their ends of the payment channel, allowing that balance to go back and forth between them whenever transactions are made. To complete the creation of the new payment channel, the inputs of both parties are put into a transaction that gets signed by both parties, and eventually, broadcasted on the main blockchain. This transaction is called the funding transaction.
+
+\paragraph{Commitment transactions} \hspace{0pt} \\
+Once the funding transaction has been added to the blockchain and settled, both parties can spend their balances on the channel in a series of commitment transactions that reallocate their balances accordingly. These kinds of transactions can remain between the channel participants and do not need to be stored on the blockchain.
+
+\paragraph{Closing the payment channel} \hspace{0pt} \\
+The balances of both parties can remain off-blockchain and be updated continuously until finally a settlement transaction is performed. This transaction contains the final balances of both parties and gets added to the main blockchain.
+
+\paragraph{Examples} \hspace{0pt} \\
+In the example money flows both ways in the payment channel, therefore it is considered a bi-directional payment channel.
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{04_Bidirectional_Channel}
+	\caption{Bi-directional payment channel}
+	\label{fig:04_Bidirectional_Channel}
+\end{figure}
+
+\par Naturally, there can also be payment channels where money only flows in one direction, from one party to another. The example below demonstrates how a payment channel could be used to perform micropayments to an internet service provider in exchange for mobile data.
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{05_Onedirectional_Channel}
+	\caption{Example of a payment channel to pay for mobile data usage}
+	\label{fig:05_Onedirectional_Channel}
+\end{figure}
+
+\paragraph{Security} \hspace{0pt} \\
+Payment channels rely on Bitcoin security primitives which prevent participants from stealing Bitcoin or losing Bitcoin due to uncooperative behaviour from the opposite party. Such security primitives include Multi-Signatures, Timelocks and No-Double-Spends.
+
 \section{Multi-Signatures}
 \section{Timelocks}
-\section{Micropayment Channels}
-\section{Bi-directional Payment Channels}
+\section{No Double-Spend}
 \section{Hash and Timelock Contracts}
 \section{Routing}
 
