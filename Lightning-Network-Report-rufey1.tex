@@ -138,7 +138,8 @@ The balances of both parties can remain off-blockchain and be updated continuous
 In the example money flows both ways in the payment channel, therefore it is considered a bi-directional payment channel.
 
 \begin{figure}[h]
-	\includegraphics[width=\textwidth]{04_Bidirectional_Channel}
+	\centering
+	\includegraphics[width=13cm]{04_Bidirectional_Channel}
 	\caption{Bi-directional payment channel}
 	\label{fig:04_Bidirectional_Channel}
 \end{figure}
@@ -146,7 +147,8 @@ In the example money flows both ways in the payment channel, therefore it is con
 \par Naturally, there can also be payment channels where money only flows in one direction, from one party to another. The example below demonstrates how a payment channel could be used to perform micropayments to an internet service provider in exchange for mobile data.
 
 \begin{figure}[h]
-	\includegraphics[width=\textwidth]{05_Onedirectional_Channel}
+	\centering
+	\includegraphics[width=10cm]{05_Onedirectional_Channel}
 	\caption{Example of a payment channel to pay for mobile data usage}
 	\label{fig:05_Onedirectional_Channel}
 \end{figure}
@@ -155,10 +157,38 @@ In the example money flows both ways in the payment channel, therefore it is con
 Payment channels rely on Bitcoin security primitives which prevent participants from stealing Bitcoin or losing Bitcoin due to uncooperative behaviour from the opposite party. Such security primitives include Multi-Signatures, Timelocks and No-Double-Spends.
 
 \section{Multi-Signatures}
+\par As the name suggests, the idea behind Multisig technology is to have multiple keys be in control of a Bitcoin balance. Multi-Signatures are described as K of N signature schemes, meaning that there are N valid predefined signatories that are authorized to release funds from a particular Bitcoin balance. Of those N keys, K is the number of signatures that are required to sign a transaction.
+
+\paragraph{2 of 2 Multi-Signature} \hspace{0pt} \\
+In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. This requires both parties of the channel to sign any transaction, because of that, one party alone cannot sign and execute a transaction on their own.
+
 \section{Timelocks}
+\par A payment channel gets closed when either party decides to publish the latest transaction onto the blockchain. That said, there is one major security concern about this idea. If for example Bob and Alice are using a payment channel in which, according to the latest commitment transaction, Alice has a greater Balance than Bob, the Question arises: Can Bob not simply broadcast a prior state in which he had a more advantageous balance and thus cheat?
+
+\par The way this can be solved is to set a timelock. A timelock is an embedded delay or countdown in a commitment transaction that determines when the transaction becomes valid. Later commitment transactions have a shorter timelock and will therefore become valid sooner. This prevents either party from spending an older commitment transaction.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=13cm]{06_Timelocks}
+	\caption{Transaction number 400 has the smallest timelock and thus becomes valid sooner than every other transaction}
+	\label{fig:06_Timelocks}
+\end{figure}
+
 \section{No Double-Spend}
-\section{Hash and Timelock Contracts}
+\par Once a commitment transaction has been broadcasted and its timelock has finished, it becomes a legitimate transaction and all the other commitment transactions automatically become invalid, since there can only be one final settlement transaction per payment channel. This principle is called No Double-Spend.  As seen in figure \ref{fig:06_Timelocks}, transaction number 400 is the first one to become valid and once it does, the other 399 transactions become invalid, which makes it impossible for Bob to cheat and spend the first transaction, where he had 36 mBTC instead of 30mBTC.
+
 \section{Routing}
+\par Another way to look at payment channels is to picture them as strings of beads stretched between two people. If Alice has to pay Bob, she can simply push one of her beads to his side. If Bob also has a payment channel with Charlie, Alice can pay Charlie through Bob, meaning that she pushes one of her beads to Bob first, and then Bob pushes a bead over to Charlie.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=12cm]{07_Beads}
+	\caption{Alice can pay Charlie through Bob by paying Bob first and then letting Bob pay Charlie}
+	\label{fig:07_Beads}
+\end{figure}
+
+\section{Hash and Timelock Contracts}
+\par The concept of routed payments provides an excellent contribution to the efficiency of the Lightning Network.
 
 \chapter{Protential Risks of the Lightning Network}
 \section{Coin Theft via Tracking}
