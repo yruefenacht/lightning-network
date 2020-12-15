@@ -11,6 +11,7 @@
 \definecolor{gray75}{gray}{0.75}
 \newcommand{\hsp}{\hspace{20pt}}
 \usepackage{microtype}
+\usepackage{float}
 % Color
 \usepackage{xcolor}
 % Graphics
@@ -59,8 +60,9 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 \titleformat{\chapter}[hang]{\LARGE\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\LARGE\bfseries}
 \titleformat{\section}[hang]{\large\bfseries}{\thesection\hsp\textcolor{gray75}{|}\hsp}{0pt}{\large\bfseries}
 
-\widowpenalties 1 10000
-\raggedbottom
+% Page bottom transition
+%\widowpenalties 1 10000
+%\raggedbottom
 
 \chapter{Introduction}
 \par The primary aim of this paper is to provide a simple to understand explanation of the Lightning Network and why it is necessary. Furthermore, this paper also dives into the underlying system upon which the Lightning Network operates, namely the Bitcoin blockchain system. The Lightning Network uses the blockchain and Bitcoin smart contracts to create a secure network of participants which are able to perform transactions at high volume and speed. To be able to understand how the lightning network works or why it is even necessary, requires a basic understanding of the blockchain and Bitcoin.
@@ -72,7 +74,7 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 \section{The Idea of Bitcoin}
 \par The main idea of Bitcoin is to remove the aspect of centralized control and to form a network of users where everyone is connected to everyone and the same rights apply to everyone.  
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\includegraphics[width=\textwidth]{01_Decentralized}
 	\caption{Conventional Banking System vs Decentralized System}
 	\label{fig:01_Decentralized}
@@ -93,6 +95,8 @@ First of all, the ledger is split into a group of blocks. Each block contains a 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{02_Ledger_Blocks}
 	\caption{Ledger being split into blocks}
+	\medskip
+	\small Instead of distributing one file that contains the history of transactions, it is much more efficient to distribute the list as packages accross the Bitcoin network.
 	\label{fig:02_Ledger_Blocks}
 \end{figure}
 
@@ -104,6 +108,8 @@ To maintain a fixed order to these blocks, each block additionally contains the 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{03_Linked_Blocks}
 	\caption{Chaining of the blocks}
+	\small Each block has the proof of work of its previous block and also uses it to generate its own proof of work.
+	\medskip
 	\label{fig:03_Linked_Blocks}
 \end{figure}
 
@@ -137,19 +143,23 @@ The balances of both parties can remain off-blockchain and be updated continuous
 \paragraph{Examples} \hspace{0pt} \\
 In the example money flows both ways in the payment channel, therefore it is considered a bi-directional payment channel.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=13cm]{04_Bidirectional_Channel}
 	\caption{Bi-directional payment channel}
+	\medskip
+	\small In a bi-directional payment channel both parties have their own balance which they can use to exchange coins. Since money flows in both directions, it is considered a bi-directional payment channel.
 	\label{fig:04_Bidirectional_Channel}
 \end{figure}
 
 \par Naturally, there can also be payment channels where money only flows in one direction, from one party to another. The example below demonstrates how a payment channel could be used to perform micropayments to an internet service provider in exchange for mobile data.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=10cm]{05_Onedirectional_Channel}
 	\caption{Example of a payment channel to pay for mobile data usage}
+	\medskip
+	\small This example shows how payment channel could be used to pay miniscule amounts of Bitcoin in exchange for small chunks of data.
 	\label{fig:05_Onedirectional_Channel}
 \end{figure}
 
@@ -170,7 +180,9 @@ In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. Thi
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=13cm]{06_Timelocks}
-	\caption{Transaction number 400 has the smallest timelock and thus becomes valid sooner than every other transaction}
+	\caption{Timelocks}
+	\medskip
+	\small Transaction number 400 has the smallest timelock and thus becomes valid sooner than every other transaction.
 	\label{fig:06_Timelocks}
 \end{figure}
 
@@ -180,15 +192,80 @@ In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. Thi
 \section{Routing}
 \par Another way to look at payment channels is to picture them as strings of beads stretched between two people. If Alice has to pay Bob, she can simply push one of her beads to his side. If Bob also has a payment channel with Charlie, Alice can pay Charlie through Bob, meaning that she pushes one of her beads to Bob first, and then Bob pushes a bead over to Charlie.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{07_Beads}
-	\caption{Alice can pay Charlie through Bob by paying Bob first and then letting Bob pay Charlie}
+	\caption{Routed payment}
+	\medskip
+	\small Alice can pay Charlie through Bob by paying Bob first and then letting Bob pay Charlie
 	\label{fig:07_Beads}
 \end{figure}
 
+\par The idea of people being able to forward payments from one person to another, is called routed payments. If the network of the participants is sufficiently enough connected, everyone will be reachable within a certain number of hops from one end to another. That is precisely what the Lightning Network is all about.
+
 \section{Hash and Timelock Contracts}
-\par The concept of routed payments provides an excellent contribution to the efficiency of the Lightning Network.
+\par The concept of routed payments is an essential part of the Lightning Network. Therefore, it is all the more important that it provides appropriate security mechanisms to prevent coin theft.
+\par Payment channels use what is known as “locks” to secure transactions. Locks can be placed around beads to constrain their movement. The Lightning Network uses two types of locks: the hash and time lock. The hash lock is a type of lock that only opens when provided with the correct password. The time lock on the other hand opens automatically after a time delay.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=9cm]{08_Locks}
+	\caption{Hash and Time lock}
+	\medskip
+	\small The hash lock opens when presented with a password that hashes to the specified hash (420f8 in this case). The time lock opens after the specified time has elapsed (48 hours in this case).
+	\label{fig:08_Locks}
+\end{figure}
+
+\par If a routed payment is performed, for example if Alice wants to pay Charlie through Bob, all members need to participate in an elaborate series of steps.
+
+\paragraph{Step 1} \hspace{0pt} \\
+First, Charlie thinks up a secret password and tells Alice the password’s hash. In this example the password is “Balderdash”, and its hash is “420f8”. In the next step, Alice uses that hash to send a password protected bead over to Bob. She does this by placing a hash lock around the bead for Bob that opens only when presented with a password that hashes to “420f8”. In addition to that, she also places a time lock around the bead that opens automatically after 48 hours and returns the bead to Alice if Bob does not participate in this transaction procedure.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{09_HTLC_Step1}
+	\caption{Alice sends bead with hash lock to Bob}
+	\medskip
+	\small Alice thinks up a password and sends Alice the password’s hash. Next, Alice sends a bead over to Bob that is protected with a hash and time lock. Bob can only receive this bead if he knows the password. If Bob does not receive the bead within 48 hours, it is returned to Alice
+	\label{fig:09_HTLC_Step1}
+\end{figure}
+
+\paragraph{Step 2} \hspace{0pt} \\
+Bob now knows that he receives the bead if he can figure out the password within 48 hours. He also knows that Charlie will reveal the password to him in exchange for one of his beads. Therefore, Bob places the same hash lock and another time lock around his bead and pushes it over to Charlie. In order for Charlie to open the hash lock, he needs to enter the password in plain in plain sight, which is the same password Bob needs to open the hash lock from Alice.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{10_HTLC_Step2}
+	\caption{Bob sends bead with copy of Alice's hash lock to Charlie}
+	\medskip
+	\small Bob knows that the bead from Alice will be his, if Charlie reveals the password of Alice's hash lock within the 48 hours time frame. He places the same hash lock around one of his beads, adds a time lock, and pushes it to Charlie. The only way Charlie can take the bead is to reveal her password that Bob needs to claim the bead from Alice.
+	\label{fig:10_HTLC_Step2}
+\end{figure} 
+
+\paragraph{Step 3} \hspace{0pt} \\
+Charlie then enters “Balderdash” into the hash lock and receives the bead from Bob. The lock’s CPU confirms that hash(“Balderdash”) = 420f8, and then opens.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{11_HTLC_Step3}
+	\caption{Charlie reveals password and takes his bead}
+	\medskip
+	\small Charlie enters his password into Bob's hash lock to open it and take the bead. This reveals the password to Bob.
+	\label{fig:11_HTLC_Step3}
+\end{figure} 
+
+\paragraph{Step 4} \hspace{0pt} \\
+With knowledge of Charlie’s password, Bob unlocks the hash lock from Alice in the same way and receives his bead. With that, the routed payment is complete.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{12_HTLC_Step4}
+	\caption{Bob receives his bead from Alice with Charlie's password}
+	\medskip
+	\small With knowledge of Charlie's password, Bob can now open the hash lock from Alice and take his bead. This completes the payment.
+	\label{fig:12_HTLC_Step4}
+\end{figure} 
+
+\paragraph{Routed transaction fees} \hspace{0pt} \\
+When looking at this example, in particular on Bob, one might wonder why Bob would participate in this whole ritual in the first place if there is nothing in it for him. 
+
+\section{A more complex situation of a routed payment}
 
 \chapter{Protential Risks of the Lightning Network}
 \section{Coin Theft via Tracking}
