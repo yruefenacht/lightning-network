@@ -12,6 +12,7 @@
 \newcommand{\hsp}{\hspace{20pt}}
 \usepackage{microtype}
 \usepackage{float}
+\usepackage{tabto}
 % Color
 \usepackage{xcolor}
 % Graphics
@@ -124,6 +125,10 @@ The proof of work, or hash, is unique for each block as aforementioned. It is ca
 
 \chapter{The Scalability Problem with Bitcoin}
 \par As far as safety is concerned, Bitcoin provides an excellent solution with its use of a distributed ledger. The Bitcoin blockchain requires, that all state modifications of the ledger must be broadcasted to each node of the Bitcoin network. It is through this mechanism that a general consensus of everyone’s balances can be achieved. However, as a payment platform, Bitcoin by itself cannot handle the whole transactions of the world anytime in the near future. The fact that all transactions must be broadcasted throughout the entire world, creates significant time delays which result in Bitcoin being only able to handle a few transactions per second.
+
+\section{Blockchain Fees}
+\par Whenever new transactions on a blockchain are created, miners need to group those transactions into blocks and secure those blocks by finding a valid hash. This process is quite computationally intensive. To compensate the miners for the work that they provide to secure the network, blockchain users need to pay a fee for creating a transaction. Every time a miner successfully stores a block of transactions on the blockchain, they are rewarded with the transaction fees that are contained in the block. 
+\par Blocks with higher amounts of transaction fees naturally have more priority, which leads to higher amounts of transaction fees for transactions that need to be resolved quicker. Big transactions fees make it difficult to attract a large user base.
 
 \chapter{Introducing the Lightning Network}
 \par The Lightning network presents an additional layer that operates on top of the Bitcoin blockchain with the aim to enable instant and feeless micropayments. It has been introduced in 2015 and has been in development ever since. The main idea of the Lightning Network is to establish separate end-to-end connections between participants in order to not store every small transaction on the main blockchain, but rather off-blockchain. These connections are named micropayment channels or simply payment channels.
@@ -263,9 +268,35 @@ With knowledge of Charlie’s password, Bob unlocks the hash lock from Alice in 
 \end{figure} 
 
 \paragraph{Routed transaction fees} \hspace{0pt} \\
-When looking at this example, in particular on Bob, one might wonder why Bob would participate in this whole ritual in the first place if there is nothing in it for him. 
+When looking at this example, in particular on the role of Bob, one might wonder why Bob would even bother to participate in this whole ritual in the first place if there is nothing in it for him. In practice however, Alice would add a small additional amount of Bitcoin to her payment for Bob, as a means of motivating Bob to complete the payment and compensating his effort. When the payment is complete, Bob would have slightly more Bitcoin than he started with. The concept of Lightning Network fees will be discussed in more detail in chapter~\ref{sec:Lightning_Network_Fees}.
 
-\section{A more complex situation of a routed payment}
+\paragraph{Uncooperative behaviour} \hspace{0pt} \\
+Should a transaction fail, for any reason, as well as uncooperative behaviour, the time lock will enable the affected participants to retrieve their funds. For example, if Bob becomes uncooperative after Alice shifts her bead over, the time lock is what allows Alice to get her funds back. She just needs to wait for the time lock to expire. Since Bob needs the password from Charlie to receive Alice’s payment, which he can only attain by sending one of his beads to Charlie, there is no possibility for Bob to steal Alice’s bead.
+
+\section{Lightning Network Fees} \label{sec:Lightning_Network_Fees}
+\par For a participant to route their payments to their destination, they need to have capital available on the routes that are visible. If there is not enough liquidity available on the routes, then it becomes impossible to route payments.
+\par The Lightning Network is setup in a way that rewards participants who provide liquidity to the network. If a participant routes payments, they can set fees that other participants will have to pay to use their capital for routing.\newline
+There are two types of fees: The \textit{base fee} and the \textit{liquidity provider fee}. 
+
+\paragraph{Base Fee} \hspace{0pt} \\
+The base fee is a flat rate that a participant charges per transaction that is routed through their node in the network. This fee is set by every participant based on what they think their capital is worth. Someone for instance might set their base fee to 0.1 mBTC while someone else, who perhaps is not as liquid, might set their base fee to 0.3 mBTC.
+
+\paragraph{Liquidity Provider Fee} \hspace{0pt} \\
+This fee is charged based on how much Bitcoin is routed though one’s payment channel. An example would be a fee of 0.01 mBTC for every mBTC that is routed through one’s payment channel.
+
+\paragraph{Example} \hspace{0pt} \\
+Assuming Charlie needs to pay Alice 5 mBTC through Bob, and Bob has the following Lightning Network Fees: 
+
+\begin{itemize}
+	\item[--] Base Fee: \tab \textit{0.1 mBTC} 
+	\item[--] Liquidity Provider Fee: \tab \textit{1\% of payment amount} 
+\end{itemize}
+
+The fee for Charlie’s lightning payment would result to a total of:\\
+0.1 + (5 * 0.01) = \textbf{0.15 mBTC}
+
+\paragraph{Comparison to traditional Bitcoin blockchain} \hspace{0pt} \\
+A traditional node in the Bitcoin blockchain does not generate any money for its owner. All fees collected go directly to the miners. On the Lightning Network however, there are no miners, and all the fees go to the node owners. This key difference also aims to encourage decentralization.
 
 \chapter{Protential Risks of the Lightning Network}
 \section{Coin Theft via Tracking}
