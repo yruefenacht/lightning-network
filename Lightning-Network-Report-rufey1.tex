@@ -28,12 +28,20 @@
  	colorlinks=true, 
 	linkcolor=black,
 	urlcolor=blue,
+	citecolor = black,
 }
+% Bibliography
+\usepackage{comment}
+\usepackage[
+	backend=biber,
+	sorting=ynt
+]{biblatex}
+\addbibresource{references.bib}
 
 \begin{document}
 
 % Title page
-\title{\Large{\textbf{The Bitcoin Lightning Network}}}
+\title{\huge{The Bitcoin Lightning Network: A Solution to Bitcoin's Scalability Problem}}
 \author{Yannick Mawuena Rüfenacht \\ \href{mailto:yannick.ruefenacht@hotmail.com}{yannick.ruefenacht@hotmail.com}}
 \date{October 21, 2020\\Version 1.0.0}
 \maketitle
@@ -137,7 +145,7 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 	\label{fig:03_Double_Spend}
 \end{figure}
 
-\section{The Computational Puzzle}
+\section{The Computational Puzzle}\label{chap:The_Computational_Puzzle}
 
 \par The Double Spending Problem was first solved in 2008 by Satoshi Nakamoto. The way he solved the problem is by adding a computational puzzle that needs to be solved before a transaction can be published and broadcasted into the network. A computational puzzle is a problem that is hard to solve but easy to verify. This puzzle is set up in a way, that it needs a lot of computing power to be solved, which establishes two main rules:
 
@@ -162,7 +170,7 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 	\label{fig:04_Ledger_Split}
 \end{figure}
 
-\par Now, if one receives two blocks that point to the same previous block, one must simply use the chain, which is the longest, since it has the most computational work put into it. Generally, a block can be considered confirmed after a few more blocks have arrived on the chain. This is the reason why Bitcoin has long confirmation times.
+\par Now, if one receives two blocks that point to the same previous block, one must simply use the chain, which is the longest, since it has the most computational work put into it. Generally, a block can be considered confirmed after a few more blocks have arrived on the chain. This is the reason why Bitcoin has long confirmation times.\cite{grant}
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{05_Soft_Fork}
@@ -174,11 +182,11 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 
 \chapter{The Scalability Problem with Bitcoin}
 
-\par The Bitcoin scalability problem is the limited rate at which bitcoin transactions can be processed. This problem ties in with the fact that blocks have a limited size and can only be generated once every 10 minutes, due to the computational puzzle. Also, considering that each block needs to be broadcasted worldwide to all the nodes of the network, that intend to update the blockchain, creates significant time delays. For these reasons, Bitcoin by itself is only able to handle a few transactions per second and will thus not be able to handle the whole transaction volume of the world anytime in the near future.
+\par The Bitcoin scalability problem is the limited rate at which bitcoin transactions can be processed. This problem ties in with the fact that blocks have a limited size and can only be generated once every 10 minutes, due to the computational puzzle. Also, considering that each block needs to be broadcasted worldwide to all the nodes of the network, that intend to update the blockchain, creates significant time delays. For these reasons, Bitcoin by itself is only able to handle a few transactions per second and will thus not be able to handle the whole transaction volume of the world anytime in the near future.\cite{joseph}
 
 \section{Bitcoin Blockchain Fees}
 
-\par As explained in chapter 2.5, minors are the ones who add blocks to the blockchain by solving the computational puzzle. For that work, miners are to be rewarded with small portions of Bitcoin, that are stored in each block. However, users may also provide additional amounts of Bitcoin to a transaction to incentivise the minors to process their transaction earlier than others. If the demand for Bitcoin rises, i.e., more transactions are generated, higher bids will be placed on transactions, the same way the other way round. This causes fee instability, which is a problem those users who are accustomed to place low bids and cannot afford to pay high bids. This inconsistency of fees could prevent Bitcoin from scaling to a large user base, that uses Bitcoin regularly.
+\par As explained in chapter~\ref{chap:The_Computational_Puzzle}, minors are the ones who add blocks to the blockchain by solving the computational puzzle. For that work, miners are to be rewarded with small portions of Bitcoin, that are stored in each block. However, users may also provide additional amounts of Bitcoin to a transaction to incentivise the minors to process their transaction earlier than others. If the demand for Bitcoin rises, i.e., more transactions are generated, higher bids will be placed on transactions, the same way the other way round. This causes fee instability, which is a problem those users who are accustomed to place low bids and cannot afford to pay high bids. This inconsistency of fees could prevent Bitcoin from scaling to a large user base, that uses Bitcoin regularly.\cite{daniel}
 
 \chapter{Introducing the Lightning Network}
 
@@ -198,7 +206,7 @@ Once the funding transaction has been added to the blockchain and settled, both 
 The balances of both parties can remain off-blockchain and be updated continuously until finally a settlement transaction is performed. This transaction contains the final balances of both parties and gets added to the main blockchain.
 
 \paragraph{Examples} \hspace{0pt} \\
-In this example money flows both ways in the payment channel, therefore it is considered a bi-directional payment channel.
+In this example money flows both ways in the payment channel, therefore it is considered a bi-directional payment channel.\cite{andreas}
 
 \begin{figure}[H]
 	\centering
@@ -225,7 +233,7 @@ Payment channels rely on Bitcoin security primitives which prevent participants 
 
 \section{Multi-Signatures}
 
-\par As the name suggests, the idea behind Multisig technology is to have multiple signatures or keys be in control of a Bitcoin balance. Multi-Signatures are described as K of N signature schemes, meaning that there are N valid predefined signatories that are authorized to release funds from a particular Bitcoin balance. Of those N keys, K is the number of signatures that are required to sign a transaction.
+\par As the name suggests, the idea behind Multisig technology is to have multiple signatures or keys be in control of a Bitcoin balance. Multi-Signatures are described as K of N signature schemes, meaning that there are N valid predefined signatories that are authorized to release funds from a particular Bitcoin balance. Of those N keys, K is the number of signatures that are required to sign a transaction. \cite{inbook}
 
 \paragraph{2 of 2 Multi-Signature} \hspace{0pt} \\
 In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. This requires both parties of the channel to sign any transaction, because of that, one party alone cannot sign and execute a transaction on their own.
@@ -268,7 +276,7 @@ In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. Thi
 
 \par The concept of routed payments is an essential part of the Lightning Network. Therefore, it is all the more important that it provides appropriate security mechanisms to prevent coin theft.
 
-\par Payment channels use what is known as “locks” to secure transactions. Locks can be placed around beads to constrain their movement. The Lightning Network uses two types of locks: the hash and time lock. The hash lock is a type of lock that only opens when provided with the correct password. The time lock on the other hand opens automatically after a specified time delay.
+\par Payment channels use what is known as “locks” to secure transactions. Locks can be placed around beads to constrain their movement. The Lightning Network uses two types of locks: the hash and time lock. The hash lock is a type of lock that only opens when provided with the correct password. The time lock on the other hand opens automatically after a specified time delay.\cite{peter}
 
 \begin{figure}[H]
 	\centering
@@ -336,7 +344,7 @@ Should a transaction fail, for any reason, as well as uncooperative behaviour, t
 \par When a participant performs a payment that is routed through several users until it reaches its destination, there needs to be enough capital available on the routes that the payment goes through. If there is not enough liquidity available on the routes, then it becomes impossible to route payments.
 
 \par The Lightning Network is setup in a way that rewards participants who provide liquidity to the network. Should a user choose to route payments, they can set fees that other users will have to pay to use their capital for routing.\newline
-There are two types of fees: The \textit{base fee} and the \textit{liquidity provider fee}.
+There are two types of fees: The \textit{base fee} and the \textit{liquidity provider fee}.\cite{chris}
 
 \paragraph{Base Fee} \hspace{0pt} \\
 The base fee is a flat rate that a user charges per transaction that is routed through their node in the network. This fee is set by every user based on what they think their capital is worth. Someone for instance might set their base fee to 0.1 mBTC while someone else, who perhaps is not as liquid, might set their base fee to 0.3 mBTC.
@@ -372,7 +380,7 @@ When a party is uncooperative or unresponsive during a transaction process, the 
 The Lightning Network still finds itself at an experimental stage of development. There is still a possibility of unexpected errors to occur, which could result in a total loss of funds. Therefore, it is advisable to use the main Bitcoin network for large payments.
 
 \paragraph{Increased centralization} \hspace{0pt} \\
-The paper: “Lightning Network: a second path towards centralisation of the Bitcoin economy” by Jian-Hong Lin, Kevin Primicerio, Tiziano Squartini, Christian Decker and Claudio J. Tessone concludes that the Lightning Network currently has an unequal distribution of wealth due to a smaller percentage of nodes on the network accumulating a larger proportion of Bitcoin. If most of the Bitcoin is held by only a few nodes, these nodes then play a major part in keeping the network connected and the majority of the nodes becomes dependant on those nodes for routing payments. This could make the network vulnerable, as the removal of one of those few major nodes could split the network.
+The paper: “Lightning Network: a second path towards centralisation of the Bitcoin economy” \cite{jian} by Jian-Hong Lin, Kevin Primicerio, Tiziano Squartini, Christian Decker and Claudio J. Tessone concludes that the Lightning Network currently has an unequal distribution of wealth due to a smaller percentage of nodes on the network accumulating a larger proportion of Bitcoin. If most of the Bitcoin is held by only a few nodes, these nodes then play a major part in keeping the network connected and the majority of the nodes becomes dependant on those nodes for routing payments. This could make the network vulnerable, as the removal of one of those few major nodes could split the network.
 
 \chapter{Use cases}
 
@@ -393,6 +401,9 @@ The concept of routed payments, the ability for participants of the Lightning Ne
 
 \par With its high transaction fees and long confirmation times, the Bitcoin blockchain does not prove to be practical for everyday usage. The Lightning Network tackles this problem by implementing user to user payment channels that operate off-chain, allowing for quick and almost feeless transactions. The Lightning Network is a promising, but quite young technology, which is still in its developmental stages. Nonetheless this technology is constantly developing and some companies around the world have already integrated it in their business. The future of the Lightning Network is unsure; however, it is, without a doubt, a decent solution approach to the Bitcoin’s scalability problem.
 
-\chapter{References}
+\printbibliography[
+heading=bibintoc,
+title={References}
+]
 
 \end{document}
