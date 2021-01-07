@@ -1,5 +1,7 @@
 \documentclass[a4paper, 12pt]{report}
 
+% Page Margins
+\usepackage[a4paper, total={15cm, 24.7cm}]{geometry}
 % Charset
 \usepackage[utf8]{inputenc}
 % Language
@@ -41,7 +43,7 @@
 \begin{document}
 
 % Title page
-\title{\huge{The Bitcoin Lightning Network: A Solution to Bitcoin's Scalability Problem}}
+\title{\LARGE{The Bitcoin Lightning Network: A Solution to Bitcoin's Scalability Problem}}
 \author{Yannick Mawuena Rüfenacht \\ \href{mailto:yannick.ruefenacht@hotmail.com}{yannick.ruefenacht@hotmail.com}}
 \date{October 21, 2020\\Version 1.0.0}
 \maketitle
@@ -49,14 +51,14 @@
 % Quote
 \begin{quote}
 \vspace*{\fill}
-\textit{``Lightning is a decentralized network using smart contract functionality in the blockchain to enable instant payments across a network of participants."}
-\par\raggedleft--- \textup{Joseph Poon}
+\textit{``The Bitcoin lightning network is a payment protocol designed to allow instant and fee-less Bitcoin payments between two parties. The lightning network works by creating direct payment channels between persons."}
+\par\raggedleft--- \textup{CryptoDefinitions}
 \vspace*{\fill}
 \end{quote}
 
 % Abstract
 \begin{abstract}
-Today’s Bitcoin protocol provides the possibility to participate in a secure decentralized payment system without a single custodial third-party holding funds. This system uses the blockchain technology to distribute all performed transactions across the network of participants to reach general consensus. The process of securing and distributing transactions takes up a substantial amount of time, which creates a significant drag on the ability to encompass all global financial transactions. The idea of the lightning network is to create micropayment channels between participants that operate off-blockchain. These channels can be used to instantly exchange Bitcoins without having to distribute them to the blockchain. Upon closing a micropayment channel, the final balance of that channel is broadcasted to the main blockchain. This concept could prove to be useful especially in situations where two participants frequently exchange money.
+Today’s Bitcoin protocol provides the opportunity to participate in a secure decentralized payment system that operates on a network of peer-to-peer online transactions without a single bank being in charge of all user accounts. Instead, the users themselves each maintain a copy of all accounts. In order to ensure that each member of the network has the same copy of all accounts, Bitcoin uses the blockchain technology. However, the process of securing and distributing transactions through the blockchain takes up a substantial amount of time, which creates a significant drag on the ability to encompass all global financial transactions. The idea of the lightning network is to create micropayment channels between participants that operate off-blockchain. These channels can be used to instantly exchange Bitcoins without having to distribute them through the blockchain. Upon closing a micropayment channel, the final balance of that channel is broadcasted to the main blockchain. This concept could prove to be useful especially in situations where two participants frequently exchange money.
 \end{abstract}
 
 % Table of Contents
@@ -85,13 +87,13 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 
 \section{The Problem with Ordinary Banking Systems}
 
-\par The way of ordinary banking systems usually goes as follows: When Alice wants to transmit one coin to Bob, she sends her transaction to a central bank, where all the balances of all the customers are stored in a database, or ledger. The bank then proceeds to process Alice’s transaction by updating the values of Alice and Bob accordingly, which concludes the transaction.
+\par The way of ordinary banking systems usually goes as follows: When Alice wants to transmit one coin to Bob, she sends her transaction to a central bank, where all the balances of all the customers are stored in a database, or ledger. The bank then proceeds to process Alice’s transaction by updating the values of Alice and Bob accordingly, which concludes the transaction. 
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{01_Banking_System}
 	\caption{Traditional Banking System}
 	\medskip
-	\small In a traditional banking system, the bank is in full control of handling transactions and managing balances, which gives it a lot of power
+	\small \textit{In a traditional banking system, the bank is in full control of handling transactions and managing balances, which gives it a lot of power.}
 	\label{fig:01_Banking_System}
 \end{figure}
 
@@ -103,21 +105,21 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 	\item \textbf{Censor transactions.}\\Since the bank is the receiver of all the transactions, it has the power to simply ignore incoming transactions, thereby censoring them.
 \end{itemize}
 
-\par The inner workings of the bank are strictly sealed to the outside world, which has the capability to create trust issues. And this is where the idea of Bitcoin comes into play.
+\par The inner workings of the bank are strictly sealed to the outside world, which has the potential to create trust issues. And this is where the idea of Bitcoin comes into play.
 
 \section{The Idea of Decentralization}
 
-\par The main idea of Bitcoin is to remove the central entity that is in control of the ledger containing all balances and transactions, and to form a network of users where everyone is connected to everyone and the same rights apply to everyone.
+\par The main idea of Bitcoin is to remove the central entity that is in control of the ledger containing all balances, and to form a network of users where everyone is connected to everyone and the same rights apply to everyone.
 
-\par To achieve this kind of system, the ledger would not be stored in one central place anymore, but instead every participant of the network obtains their own copy of the ledger and updates it accordingly. That way, each participant fulfils the role of a bank on their own.
+\par To achieve this kind of system, the ledger would not be stored in one central place anymore, but instead, every participant of the network obtains their own copy of the ledger and updates it accordingly. That way each participant fulfils the role of a bank on their own.
 
-\par If Alice now wants to transfer one coin to Bob, she no longer sends her transaction to the bank, but instead she updates her own ledger first and then sends it to the other participants on the network, so that they can update their ledgers as well.
+\par If Alice now wants to transfer one coin to Bob, she no longer sends her transaction to the bank, but instead, she updates her own ledger first and then sends it to the other participants on the network, so that they can update their ledgers as well.
 
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{02_Naive_System}
 	\caption{Decentralized Payment System}
 	\medskip
-	\small In a decentralized system, the bank is removed and everyone keeps track of all the balances by themselves. When someone performs a payment, they now need to inform all the other users in the network.
+	\small \textit{In a decentralized system, the bank is removed and everyone keeps track of all the balances by themselves. When someone performs a payment, they now need to inform all the other users in the network.}
 	\label{fig:02_Naive_System}
 \end{figure}
 
@@ -129,7 +131,7 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 
 \par Nonetheless, this alone cannot guarantee the right order of transactions for every participant. From a performance perspective, the idea of everyone publicly broadcasting their transactions to the entire network would work for a small number of people, however, as the number of participants increases, it becomes significantly more difficult to maintain the right order of transactions across the entire network. Network delays could cause transactions to arrive in different orders in different places.
 
-\par To see why it is important that the ledger, the history of all transactions, has the same order of transactions across the entire network of users, becomes very apparent when looking at the Double Spending Problem.
+\par To see why it is important that the ledger, the history of all transactions, has the same order of transactions across the entire network, becomes very apparent when looking at the Double Spending Problem.
 
 \section{The Double Spending Problem}
 
@@ -141,7 +143,7 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 	\includegraphics[width=\textwidth]{03_Double_Spend}
 	\caption{The Double Spending Attack}
 	\medskip
-	\small After paying Bob with transaction no. 1495, Alice goes back in time in the blockchain to transaction no. 1494 where she still had 1 coin left, and creates a new transaction from that point in time to pay Charlie.
+	\small \textit{After paying Bob with transaction no. 1495, Alice goes back in time in the blockchain to transaction no. 1494 where she still had 1 coin left, and creates a new transaction from that point in time to pay Charlie.}
 	\label{fig:03_Double_Spend}
 \end{figure}
 
@@ -154,7 +156,7 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 	\item The creation of transaction is now regulated. Not anyone can now simply create a new transaction, instead, a leader is chosen. The person who solves the puzzle becomes leader and has the right to publicly announce and broadcast the transaction. Incoming transactions are now only valid if they stem from the leader.
 \end{itemize}
 
-\par The addition of a computational puzzle does not mean that every user now needs to solve a puzzle before they can publish a transaction. In practice, when a transaction is created, it is sent to waiting pool. From there, special members of the network known as “Minors” will solve the puzzles and broadcast the transactions. It takes on average 10 minutes to complete one puzzle. To compensate the minors for the work that they contribute to secure the network, they are rewarded with small amounts of Bitcoin that become available to the miner when the puzzle is solved.
+\par The addition of a computational puzzle does not mean that every user now needs to solve a puzzle before they can publish a transaction. In practice, when a transaction is created, it is sent to a waiting pool. From there, special members of the network known as “Minors” will solve the puzzles and broadcast the transactions. It takes on average 10 minutes to complete one puzzle. To compensate the minors for the work that they contribute to secure the network, they are rewarded with small amounts of Bitcoin that become available to the miner when the puzzle is solved.
 
 \section{The Bitcoin Blockchain}
 
@@ -166,41 +168,41 @@ Today’s Bitcoin protocol provides the possibility to participate in a secure d
 	\includegraphics[width=\textwidth]{04_Ledger_Split}
 	\caption{Ledger is split into blocks}
 	\medskip
-	\small Instead of distributing one file that contains the history of transactions, it is much more efficient to distribute the list as separate chunks of data accross the Bitcoin network.
+	\small \textit{Instead of distributing one file that contains the history of transactions, it is much more efficient to distribute the list as separate chunks of data accross the Bitcoin network.}
 	\label{fig:04_Ledger_Split}
 \end{figure}
 
-\par Now, if one receives two blocks that point to the same previous block, one must simply use the chain, which is the longest, since it has the most computational work put into it. Generally, a block can be considered confirmed after a few more blocks have arrived on the chain. This is the reason why Bitcoin has long confirmation times.\cite{grant}
+\par Now, if one receives two blocks that point to the same previous block, one must simply follow the chain, which is the longest, since it has the most computational work put into it. Generally, a block can be considered confirmed after a few more blocks have arrived on the chain. This is the reason why Bitcoin has long confirmation times.\cite{grant}
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{05_Soft_Fork}
 	\caption{Soft fork}
 	\medskip
-	\small In the event of two blocks being broadcasted simultaneously, there will be two parts of the network with conflicting transaction histories, which results in a fork in the blockchain. In that case, users must simply follow the chain which is the longest, since it has the most computational effort put into it.
+	\small \textit{In the event of two blocks being broadcasted simultaneously, there will be two parts of the network with conflicting transaction histories, which results in a fork in the blockchain. In that case, users must simply follow the chain which is the longest, since it has the most computational effort put into it.}
 	\label{fig:05_Soft_Fork}
 \end{figure}
 
 \chapter{The Scalability Problem with Bitcoin}
 
-\par The Bitcoin scalability problem is the limited rate at which bitcoin transactions can be processed. This problem ties in with the fact that blocks have a limited size and can only be generated once every 10 minutes, due to the computational puzzle. Also, considering that each block needs to be broadcasted worldwide to all the nodes of the network, that intend to update the blockchain, creates significant time delays. For these reasons, Bitcoin by itself is only able to handle a few transactions per second and will thus not be able to handle the whole transaction volume of the world anytime in the near future.\cite{joseph}
+\par The Bitcoin scalability problem is the limited rate at which bitcoin transactions can be processed. This problem ties in with the fact that blocks have a limited size and can only be generated once every 10 minutes, due to the computational puzzle. Also, considering that each block needs to be broadcasted worldwide to all the nodes of the network, that intend to update the blockchain, might create significant time delays for some users. For these reasons, Bitcoin by itself is only able to handle a few transactions per second and will thus not be able to handle the whole transaction volume of the world anytime in the near future.\cite{joseph}
 
 \section{Bitcoin Blockchain Fees}
 
-\par As explained in chapter~\ref{chap:The_Computational_Puzzle}, minors are the ones who add blocks to the blockchain by solving the computational puzzle. For that work, miners are to be rewarded with small portions of Bitcoin, that are stored in each block. However, users may also provide additional amounts of Bitcoin to a transaction to incentivise the minors to process their transaction earlier than others. If the demand for Bitcoin rises, i.e., more transactions are generated, higher bids will be placed on transactions, the same way the other way round. This causes fee instability, which is a problem those users who are accustomed to place low bids and cannot afford to pay high bids. This inconsistency of fees could prevent Bitcoin from scaling to a large user base, that uses Bitcoin regularly.\cite{daniel}
+\par As explained in chapter~\ref{chap:The_Computational_Puzzle}, minors are the ones who add blocks to the blockchain by solving the computational puzzle. For that work, miners are to be rewarded with small portions of Bitcoin, that are stored in each block. However, users may also provide additional amounts of Bitcoin to a transaction to incentivise the minors to process their transaction earlier than others. If the demand for Bitcoin rises, i.e., more transactions are generated, higher bids will be placed on transactions, the same way the other way around. This causes fee instability, which is a problem for those users who are accustomed to place low bids and cannot afford to pay high bids. This inconsistency of fees could prevent Bitcoin from scaling to a large user base, that uses Bitcoin regularly.\cite{daniel}
 
 \chapter{Introducing the Lightning Network}
 
-\par The Lightning network presents an additional layer that operates on top of the Bitcoin blockchain with the aim to enable instant and feeless micropayments. It has been introduced in late 2015, early 2016, and has been in development ever since. The main idea of the Lightning Network is to establish separate peer-to-peer connections between participants to enable fast transactions. As discussed earlier, the Bitcoin blockchain strongly regulates the creation of new transactions, additionally, each transaction has a high fee and long confirmation time, which makes it impractical to use Bitcoin for small and quick payments. For that reason, the Lightning Network aims to not store every transaction on the main blockchain, but rather off-blockchain, where they do not need to undergo a long and complicated confirmation process. These connections that are formed between nodes of the Lightning Network are named micropayment channels, or simply payment channels.
+\par The Lightning network presents an additional layer that operates on top of the Bitcoin blockchain with the aim to enable instant and feeless micropayments. It has been introduced in late 2015, early 2016, and has been in development ever since. The main idea of the Lightning Network is to establish separate peer-to-peer connections between participants to enable fast transactions. As discussed earlier, the Bitcoin blockchain strongly regulates the creation of new transactions. Additionally, each transaction has a high fee and long confirmation time, which makes it impractical to use Bitcoin for small and quick payments. For that reason, the Lightning Network aims to not store every transaction on the main blockchain, but rather off-blockchain, where they do not need to undergo a long and complicated confirmation process. These connections that are formed between nodes of the Lightning Network are named micropayment channels, or simply payment channels.
 
 \section{Payment channels}
 
-\par If two participants regularly exchange Bitcoin, they would open a new payment channel between them, that is off-blockchain. This allows them to perform quick payments between each other. Once they conclude their business, they conduct a closing transaction which contains the final balances of their wallets on the payment channel. Only the initial and closing transaction are stored on the main blockchain. That way, even if thousands of transactions are performed on the payment channel, only two transactions will be stored on the blockchain eventually.
+\par If two participants regularly exchange Bitcoin, they would open a new payment channel between them, that is off-blockchain. This allows them to perform quick payments between each other. Once they conclude their business, they conduct a closing transaction which contains the final balances of their wallets from the payment channel. Only the initial and closing transaction are stored on the main blockchain. That way, even if thousands of transactions are performed on the payment channel, only two transactions will be stored on the blockchain eventually.
 
 \paragraph{Creating a new payment channel} \hspace{0pt} \\
 During the initiation of the payment channel, both parties provide a certain balance of Bitcoin onto their ends of the payment channel, allowing that balance to go back and forth between them whenever transactions are made. To complete the creation of the new payment channel, the inputs of both parties are put into a transaction that gets signed by both parties, and eventually, broadcasted on the main blockchain. This transaction is called the funding transaction.
 
 \paragraph{Commitment transactions} \hspace{0pt} \\
-Once the funding transaction has been added to the blockchain and settled, both parties can spend their balances on the channel in a series of commitment transactions that reallocate their balances accordingly. These kinds of transactions can remain between the channel participants and do not need to be stored on the blockchain.
+Once the funding transaction has been added to the blockchain and settled, both parties can spend their balances on the channel in a series of commitment transactions that reallocate their balances accordingly. These kinds of transactions remain between the channel participants and do not need to be stored on the blockchain.
 
 \paragraph{Closing the payment channel} \hspace{0pt} \\
 The balances of both parties can remain off-blockchain and be updated continuously until finally a settlement transaction is performed. This transaction contains the final balances of both parties and gets added to the main blockchain.
@@ -213,7 +215,7 @@ In this example money flows both ways in the payment channel, therefore it is co
 	\includegraphics[width=13cm]{06_Bidirectional_Channel}
 	\caption{Bi-directional payment channel}
 	\medskip
-	\small In a bi-directional payment channel both parties have their own balance which they can use to exchange coins. Since money flows in both directions, it is considered a bi-directional payment channel.
+	\small \textit{In a bi-directional payment channel both parties have their own balance which they can use to exchange coins. Since money flows in both directions, it is considered a bi-directional payment channel.}
 	\label{fig:06_Bidirectional_Channel}
 \end{figure}
 
@@ -224,7 +226,7 @@ In this example money flows both ways in the payment channel, therefore it is co
 	\includegraphics[width=10cm]{07_Onedirectional_Channel}
 	\caption{Example of a payment channel to pay for mobile data usage}
 	\medskip
-	\small This example shows how payment channel could be used to pay miniscule amounts of Bitcoin in exchange for small chunks of data.
+	\small \textit{This example shows how payment channel could be used to pay miniscule amounts of Bitcoin in exchange for small chunks of data.}
 	\label{fig:07_Onedirectional_Channel}
 \end{figure}
 
@@ -233,23 +235,23 @@ Payment channels rely on Bitcoin security primitives which prevent participants 
 
 \section{Multi-Signatures}
 
-\par As the name suggests, the idea behind Multisig technology is to have multiple signatures or keys be in control of a Bitcoin balance. Multi-Signatures are described as K of N signature schemes, meaning that there are N valid predefined signatories that are authorized to release funds from a particular Bitcoin balance. Of those N keys, K is the number of signatures that are required to sign a transaction. \cite{inbook}
+\par As the name suggests, the idea behind Multi-Signature technology is to have multiple signatures or keys be in control of a Bitcoin balance. Multi-Signatures are described as “K of N” signature schemes, meaning that there are N valid predefined signatories that are authorized to release funds from a particular Bitcoin balance. Of those N keys, K is the number of signatures that are required to sign a transaction.\cite{inbook}
 
 \paragraph{2 of 2 Multi-Signature} \hspace{0pt} \\
-In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. This requires both parties of the channel to sign any transaction, because of that, one party alone cannot sign and execute a transaction on their own.
+In the case of the Lightning Network, a “2 of 2 Multi-Signature” type is used. This requires both parties of the channel to sign any transaction, because of that, one party alone cannot sign and execute a transaction on their own.
 
 \section{Timelocks}
 
-\par A payment channel gets closed when either party decides to publish the latest transaction onto the blockchain. That said, there is one major security concern to be found here. If for example, Bob and Alice are using a payment channel in which, according to the latest commitment transaction, Alice has a greater Balance than Bob, the Question arises: Can Bob not simply broadcast a prior state in which he had a more advantageous balance and thus cheat?
+\par A payment channel gets closed when either party decides to publish the latest transaction onto the blockchain. That said, there is one major security concern to be found here. If, for example, Bob and Alice are using a payment channel in which, according to the latest commitment transaction, Alice has a greater Balance than Bob, the Question arises: Can Bob not simply broadcast a prior state in which he had a more advantageous balance and thus cheat?
 
-\par The way this can be solved is to set a timelock. A timelock is an embedded delay or countdown in a commitment transaction that determines when the transaction becomes valid. Later commitment transactions have a shorter timelock and will therefore become valid sooner. This prevents either party from spending an older commitment transaction.
+\par The way this can be solved is to set a “timelock”. A timelock is an embedded delay or countdown in a commitment transaction that determines when the transaction becomes valid. Later commitment transactions have a shorter timelock and will therefore become valid sooner. This prevents either party from spending an older commitment transaction.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=13cm]{08_Timelocks}
 	\caption{Timelocks}
 	\medskip
-	\small Transaction number 400 has the smallest timelock and thus becomes valid sooner than every other transaction.
+	\small \textit{Transaction number 400 has the smallest timelock and thus becomes valid sooner than every other transaction.}
 	\label{fig:08_Timelocks}
 \end{figure}
 
@@ -266,7 +268,7 @@ In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. Thi
 	\includegraphics[width=12cm]{09_Beads}
 	\caption{Routed payment}
 	\medskip
-	\small Alice can pay Charlie through Bob by paying Bob first and then letting Bob pay Charlie
+	\small \textit{Alice can pay Charlie through Bob by paying Bob first and then letting Bob pay Charlie.}
 	\label{fig:09_Beads}
 \end{figure}
 
@@ -274,16 +276,16 @@ In the case of the Lightning Network, a 2 of 2 Multi-Signature type is used. Thi
 
 \section{Hash and Timelock Contracts}
 
-\par The concept of routed payments is an essential part of the Lightning Network. Therefore, it is all the more important that it provides appropriate security mechanisms to prevent coin theft.
+\par The concept of routed payments is an essential part of the Lightning Network. Therefore, it is all the more important that it provides the appropriate security mechanisms to prevent coin theft.
 
-\par Payment channels use what is known as “locks” to secure transactions. Locks can be placed around beads to constrain their movement. The Lightning Network uses two types of locks: the hash and time lock. The hash lock is a type of lock that only opens when provided with the correct password. The time lock on the other hand opens automatically after a specified time delay.\cite{peter}
+\par Payment channels use what is known as “locks contracts” to secure transactions. Locks can be placed around beads to constrain their movement. The Lightning Network uses two types of locks: the hash and time lock. The hash lock is a type of lock that only opens when provided with the correct password. The time lock on the other hand opens automatically after a specified time delay.\cite{peter}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=9cm]{10_Locks}
 	\caption{Hash and Time lock}
 	\medskip
-	\small The hash lock opens when presented with a password that hashes to the specified hash (420f8 in this case). The time lock opens after the specified time has elapsed (48 hours in this case).
+	\small \textit{The hash lock opens when presented with a password that hashes to the specified hash (420f8 in this case). The time lock opens after the specified time has elapsed (48 hours in this case).}
 	\label{fig:10_Locks}
 \end{figure}
 
@@ -296,7 +298,7 @@ First, Charlie thinks up a secret password and tells Alice the password’s hash
 	\includegraphics[width=\textwidth]{11_HTLC_Step1}
 	\caption{Alice sends bead with hash lock to Bob}
 	\medskip
-	\small Charlie thinks up a password and sends Alice the password’s hash. Next, Alice sends a bead over to Bob that is protected with a hash and time lock. Bob can only receive this bead if he knows the password. If Bob does not receive the bead within 48 hours, it is returned to Alice.
+	\small \textit{Charlie thinks up a password and sends Alice the password’s hash. Next, Alice sends a bead over to Bob that is protected with a hash and time lock. Bob can only receive this bead if he knows the password. If Bob does not receive the bead within 48 hours, it is returned to Alice.}
 	\label{fig:11_HTLC_Step1}
 \end{figure}
 
@@ -307,7 +309,7 @@ Bob now knows that he receives the bead if he can figure out the password within
 	\includegraphics[width=\textwidth]{12_HTLC_Step2}
 	\caption{Bob sends bead with copy of Alice's hash lock to Charlie}
 	\medskip
-	\small Bob knows that the bead from Alice will be his, if Charlie reveals the password of Alice's hash lock within the 48 hours time frame. He places the same hash lock around one of his beads, adds a time lock, and pushes it to Charlie. The only way Charlie can take the bead is to reveal her password that Bob needs to claim the bead from Alice.
+	\small \textit{Bob knows that the bead from Alice will be his, if Charlie reveals the password of Alice's hash lock within the 48 hours time frame. He places the same hash lock around one of his beads, adds a time lock, and pushes it to Charlie. The only way Charlie can take the bead is to reveal her password that Bob needs to claim the bead from Alice.}
 	\label{fig:12_HTLC_Step2}
 \end{figure} 
 
@@ -318,7 +320,7 @@ Charlie then enters “Balderdash” into the hash lock and receives the bead fr
 	\includegraphics[width=\textwidth]{13_HTLC_Step3}
 	\caption{Charlie reveals password and takes his bead}
 	\medskip
-	\small Charlie enters his password into Bob's hash lock to open it and take the bead. This reveals the password to Bob.
+	\small \textit{Charlie enters his password into Bob's hash lock to open it and take the bead. This reveals the password to Bob.}
 	\label{fig:13_HTLC_Step3}
 \end{figure} 
 
@@ -329,12 +331,12 @@ With knowledge of Charlie’s password, Bob unlocks the hash lock from Alice in 
 	\includegraphics[width=\textwidth]{14_HTLC_Step4}
 	\caption{Bob receives his bead from Alice with Charlie's password}
 	\medskip
-	\small With knowledge of Charlie's password, Bob can now open the hash lock from Alice and take his bead. This completes the payment.
+	\small \textit{With knowledge of Charlie's password, Bob can now open the hash lock from Alice and take his bead. This completes the payment.}
 	\label{fig:14_HTLC_Step4}
 \end{figure} 
 
 \paragraph{Bob’s motivation} \hspace{0pt} \\
-When looking at this example, in particular on the role of Bob, one might wonder why Bob would even bother to participate in this whole ritual in the first place if there is nothing in it for him. In practice however, Alice would add a small additional amount of Bitcoin to her payment for Bob, as a means of motivating Bob to forward the payment and compensating his effort. When the payment is complete, Bob would have slightly more Bitcoin than he started with. The concept of Lightning Network fees will be discussed in more detail in chapter~\ref{sec:Lightning_Network_Fees}.
+When looking at this example, in particular on the role of Bob, one might wonder why Bob would even bother to participate in this whole ritual in the first place if there is nothing in it for him. In practice, however, Alice would add a small additional amount of Bitcoin to her payment for Bob, as a means of motivating Bob to forward the payment and compensating his effort. When the payment is complete, Bob would have slightly more Bitcoin than he started with. The concept of Lightning Network fees will be discussed in more detail in chapter~\ref{sec:Lightning_Network_Fees}.
 
 \paragraph{Uncooperative behaviour} \hspace{0pt} \\
 Should a transaction fail, for any reason, as well as uncooperative behaviour, the time lock will enable the affected participants to retrieve their funds. For example, if Bob becomes uncooperative after Alice shifts her bead over, the time lock is what allows Alice to get her bead back. She just needs to wait for the time lock to expire. Since Bob needs the password from Charlie to receive Alice’s bead, which he can only attain by sending one of his beads to Charlie, there is no possibility for Bob to steal Alice’s bead.
@@ -380,7 +382,7 @@ When a party is uncooperative or unresponsive during a transaction process, the 
 The Lightning Network still finds itself at an experimental stage of development. There is still a possibility of unexpected errors to occur, which could result in a total loss of funds. Therefore, it is advisable to use the main Bitcoin network for large payments.
 
 \paragraph{Increased centralization} \hspace{0pt} \\
-The paper: “Lightning Network: a second path towards centralisation of the Bitcoin economy” \cite{jian} by Jian-Hong Lin, Kevin Primicerio, Tiziano Squartini, Christian Decker and Claudio J. Tessone concludes that the Lightning Network currently has an unequal distribution of wealth due to a smaller percentage of nodes on the network accumulating a larger proportion of Bitcoin. If most of the Bitcoin is held by only a few nodes, these nodes then play a major part in keeping the network connected and the majority of the nodes becomes dependant on those nodes for routing payments. This could make the network vulnerable, as the removal of one of those few major nodes could split the network.
+The paper: “Lightning Network: a second path towards centralisation of the Bitcoin economy” \cite{jian} by Jian-Hong Lin, Kevin Primicerio, Tiziano Squartini, Christian Decker and Claudio J. Tessone concludes that the Lightning Network currently has an unequal distribution of wealth due to a smaller percentage of nodes on the network accumulating a larger proportion of Bitcoin. If most of the Bitcoin is held by only a few nodes, these nodes then play a major part in keeping the network connected and the majority of the nodes becomes dependant on those few nodes for routing payments. This could make the network vulnerable, as the removal of one of those few major nodes could split the network.
 
 \chapter{Use cases}
 
@@ -399,7 +401,7 @@ The concept of routed payments, the ability for participants of the Lightning Ne
 
 \chapter{Conclusion}
 
-\par With its high transaction fees and long confirmation times, the Bitcoin blockchain does not prove to be practical for everyday usage. The Lightning Network tackles this problem by implementing user to user payment channels that operate off-chain, allowing for quick and almost feeless transactions. The Lightning Network is a promising, but quite young technology, which is still in its developmental stages. Nonetheless this technology is constantly developing and some companies around the world have already integrated it in their business. The future of the Lightning Network is unsure; however, it is, without a doubt, a decent solution approach to the Bitcoin’s scalability problem.
+\par With its high transaction fees and long confirmation times, the Bitcoin blockchain does not prove to be practical for everyday usage. The Lightning Network tackles this problem by implementing user to user payment channels that operate off-chain, allowing for quick and almost feeless transactions. The Lightning Network is a promising, but quite young technology, which is still in its developmental stages. Nonetheless this technology is constantly developing and some companies around the world have already integrated it in their businesses. The future of the Lightning Network is unsure; however, it is, without a doubt, a decent solution approach to the Bitcoin’s scalability problem.
 
 \printbibliography[
 heading=bibintoc,
